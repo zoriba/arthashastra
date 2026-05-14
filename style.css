@@ -25,7 +25,7 @@ html {
 body {
   background-image:
     linear-gradient(rgb(47, 62, 70, 0.8), rgb(47, 62, 70, 0.8)),
-    url(../src/img/idkbru.png);
+    url(../img/idkbru.png);
   font-family: "Poppins";
   margin: 0;
   padding: 10px;

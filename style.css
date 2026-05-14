@@ -13,6 +13,10 @@
   --dark-slate-grey: #354f52ff;
   --charcoal-blue: #2f3e46ff;
 }
+
+html {
+  scroll-behavior: smooth;
+}
 * {
   margin: 0;
   padding: 0;
@@ -20,7 +24,7 @@
 }
 body {
   background-image:
-    linear-gradient(rgb(47, 62, 70, 0.7), rgb(47, 62, 70, 0.7)),
+    linear-gradient(rgb(47, 62, 70, 0.8), rgb(47, 62, 70, 0.8)),
     url(../src/img/idkbru.png);
   font-family: "Poppins";
   margin: 0;
@@ -62,7 +66,7 @@ nav ul li {
 
 nav ul li a {
   text-decoration: none;
-  color: #bfa28c;
+  color: var(--ash-grey);
   font-weight: bold;
   transition: 0.7s;
   padding: 12px 15px;
@@ -70,11 +74,12 @@ nav ul li a {
   border-radius: 8px;
 }
 nav ul li a:hover {
-  background-color: #52796fff;
-  color: #a98b76;
+  background-color: var(--deep-teal);
+  color: var(--ash-grey);
 }
 
 .body {
+  scroll-behavior: smooth;
   background: rgba(255, 255, 255, 0.08);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
@@ -84,7 +89,7 @@ nav ul li a:hover {
   border: 1px solid rgba(255, 255, 255, 0.08);
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
   border-radius: 20px;
-  height: calc(100vh - 130px);
+  height: calc(100vh - 135px);
   overflow-y: auto;
   overflow-x: hidden;
 }
@@ -111,7 +116,7 @@ nav ul li a:hover {
 .hometext {
   font-family: "Lemon/Milk", sans-serif;
   font-weight: bolder;
-  color: #bfa28c;
+  color: var(--ash-grey);
   text-align: center;
 }
 .homebutton {
@@ -120,24 +125,24 @@ nav ul li a:hover {
 
 .homebutton a {
   text-decoration: none;
-  color: #bfa28c;
+  color: var(--ash-grey);
   font-family: "Lemon/Milk", sans-serif;
   font-weight: bolder;
   padding: 5px;
-  border: 1px solid #a98b76;
+  border: 1px solid #52796fff;
   padding: 15px;
   border-radius: 10px;
   transition: 0.8s;
 }
 .homebutton a:hover {
   border: transparent;
-  background-color: #52796fff;
-  color: #a98b76;
+  background-color: var(--deep-teal);
+  color: var(--ash-grey);
 }
 
 .docs {
   text-align: justify;
-  color: #bfa28c;
+  color: var(--ash-grey);
   height: 100vh;
 
   max-height: 100%;
@@ -145,25 +150,139 @@ nav ul li a:hover {
   padding: 20px;
 }
 
-/* .docs-page {
-    display: block;
-    height: calc(100vh - 130px);
-    overflow: hidden;
-  } */
-
-/* .docs {
-  height: 100%;
-  overflow-y: auto;
-  overflow-x: hidden;
-  color: #bfa28c;
-  text-align: justify;
-  padding: 10px;
-} */
-
 .spacerbig {
   margin-top: 1.5em;
 }
 
 .spacersmall {
   margin-top: 0.7em;
+}
+.hyperlinks {
+  margin-top: 15px;
+  padding: 20px;
+  font-size: large;
+}
+.hyperlinks ol li {
+  margin-left: 30px;
+  font-size: large;
+  color: var(--ash-grey);
+}
+.hyperlinks a {
+  font-size: large;
+  color: var(--muted-teal);
+}
+
+#hlhead {
+  color: var(--ash-grey);
+}
+
+.footer {
+  margin: 15px;
+  padding-bottom: 15px;
+}
+.footer ul {
+  list-style-type: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+.footer ul li {
+  padding: 12px 15px;
+  border: 1px soild white;
+}
+.footer ul li a {
+  text-decoration: none;
+  color: var(--ash-grey);
+  font-weight: bold;
+  transition: 0.7s;
+  border-radius: 8px;
+}
+
+.quiz-container {
+  flex: 1;
+  width: 100%;
+  height: 100%;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+  color: var(--ash-grey);
+}
+
+.quiz-progress {
+  font-size: 0.9rem;
+  margin-bottom: 20px;
+  color: var(--muted-teal);
+}
+
+.quiz-question {
+  margin-bottom: 30px;
+}
+
+.quiz-options {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.option-btn {
+  padding: 18px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 14px;
+  color: var(--ash-grey);
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.option-btn:hover {
+  background: rgba(255, 255, 255, 0.14);
+  transform: translateY(-2px);
+}
+
+.option-btn.selected {
+  background: var(--deep-teal);
+}
+
+.next-btn {
+  margin-top: 30px;
+  padding: 15px 25px;
+  border: none;
+  border-radius: 12px;
+  background: var(--deep-teal);
+  color: var(--ash-grey);
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.next-btn:hover {
+  transform: translateY(-2px);
+  background: var(--muted-teal);
+  color: var(--charcoal-blue);
+}
+
+.home-btn {
+  margin-top: 15px;
+  width: fit-content;
+  padding: 15px 25px;
+  border-radius: 12px;
+  text-decoration: none;
+  color: var(--ash-grey);
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition:
+    0.3s background,
+    0.3s transform;
+}
+
+.home-btn:hover {
+  background: var(--deep-teal);
+
+  transform: translateY(-2px);
 }

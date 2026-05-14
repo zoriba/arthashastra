@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="shortcut icon" href="img/logo.png" type="image/x-icon" />
+    <title>MCS AN | Home</title>
+  </head>
+  <body>
+    <nav>
+      <a href="index.html"><img src="img/logo.png" alt="" class="logo" /></a>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="docs.html">Docs</a></li>
+        <li><a href="quiz.html">Quiz</a></li>
+        <li><a href="detector.html">Detector</a></li>
+      </ul>
+    </nav>
+    <div class="body">
+      <div class="quiz-container">
+        <div class="quiz-progress" id="progress">Question 1 of 3</div>
+        <h1 class="quiz-question" id="question">Question goes here</h1>
+        <div class="quiz-options" id="options"></div>
+        <button class="next-btn" id="nextBtn">Next</button>
+        <a href="index.html" class="home-btn" id="homeBtn">
+          Back to Homepage
+        </a>
+      </div>
+    </div>
+    <script>
+      const questions = [
+        {
+          question: "What is a dark pattern in e-commerce?",
+
+          options: [
+            "A website bug",
+            "A strategy that manipulates users into certain actions",
+            "A cybersecurity tool",
+            "A payment method",
+          ],
+
+          answer: 1,
+        },
+
+        {
+          question: "Which of the following is an example of hidden costs?",
+
+          options: [
+            "Showing all charges clearly at the start",
+            "Giving free delivery",
+            "Revealing extra fees only at checkout",
+            "Offering cashback rewards",
+          ],
+
+          answer: 2,
+        },
+
+        {
+          question: "What is forced continuity?",
+
+          options: [
+            "A website crashing repeatedly",
+            "A free trial automatically turning into a paid subscription",
+            "A payment gateway error",
+            "A product going out of stock",
+          ],
+
+          answer: 1,
+        },
+
+        {
+          question: "Why do companies use dark patterns?",
+
+          options: [
+            "To make websites look colorful",
+            "To improve profits and increase user actions",
+            "To reduce sales",
+            "To improve internet speed",
+          ],
+
+          answer: 1,
+        },
+
+        {
+          question: "Which statement is an example of fake scarcity?",
+
+          options: [
+            "Free shipping available",
+            "New collection launched",
+            "Only 1 left in stock!",
+            "Product available in different colors",
+          ],
+
+          answer: 2,
+        },
+
+        {
+          question: "What is confirmshaming?",
+
+          options: [
+            "Protecting user privacy",
+            "Using guilt-inducing language to influence choices",
+            "Providing honest product reviews",
+            "Encrypting user data",
+          ],
+
+          answer: 1,
+        },
+
+        {
+          question:
+            "Which psychological concept explains why people keep shopping after spending time filling their cart?",
+
+          options: [
+            "Social proof",
+            "Endowment effect and sunk cost",
+            "Default bias",
+            "Scarcity effect",
+          ],
+
+          answer: 1,
+        },
+
+        {
+          question: "What is one impact of dark patterns on consumers?",
+
+          options: [
+            "Increased trust in brands",
+            "Faster internet access",
+            "Financial loss and frustration",
+            "Better shopping decisions",
+          ],
+
+          answer: 2,
+        },
+
+        {
+          question:
+            "According to the notes, what should users do before clicking Place Order?",
+
+          options: [
+            "Ignore the terms and conditions",
+            "Quickly complete the purchase",
+            "Pause and re-check pricing and checkboxes",
+            "Refresh the website",
+          ],
+
+          answer: 2,
+        },
+
+        {
+          question:
+            "Which Indian law helps address unfair trade practices and dark patterns?",
+
+          options: [
+            "Right to Information Act",
+            "Consumer Protection Act 2019",
+            "Companies Act 2013",
+            "Information Technology Act 2000",
+          ],
+
+          answer: 1,
+        },
+      ];
+
+      let currentQuestion = 0;
+      let selectedAnswer = null;
+      let score = 0;
+
+      const questionEl = document.getElementById("question");
+      const optionsEl = document.getElementById("options");
+      const progressEl = document.getElementById("progress");
+      const nextBtn = document.getElementById("nextBtn");
+      const homeBtn = document.getElementById("homeBtn");
+
+      function loadQuestion() {
+        selectedAnswer = null;
+        const current = questions[currentQuestion];
+
+        progressEl.textContent = `Question ${currentQuestion + 1} of ${questions.length}`;
+        questionEl.textContent = current.question;
+        optionsEl.innerHTML = "";
+
+        current.options.forEach((option, index) => {
+          const button = document.createElement("button");
+          button.classList.add("option-btn");
+          button.textContent = option;
+          button.addEventListener("click", () => {
+            document
+              .querySelectorAll(".option-btn")
+              .forEach((btn) => btn.classList.remove("selected"));
+            button.classList.add("selected");
+            selectedAnswer = index;
+          });
+          optionsEl.appendChild(button);
+        });
+      }
+
+      nextBtn.addEventListener("click", () => {
+        if (selectedAnswer === null) return;
+        if (selectedAnswer === questions[currentQuestion].answer) {
+          score++;
+        }
+
+        currentQuestion++;
+
+        if (currentQuestion < questions.length) {
+          loadQuestion();
+        } else {
+          questionEl.textContent = `Quiz Finished! You scored ${score}/${questions.length}`;
+          progressEl.textContent = "Completed";
+          optionsEl.innerHTML = "";
+          nextBtn.style.display = "none";
+          homeBtn.style.display = "inline-block";
+        }
+      });
+
+      loadQuestion();
+    </script>
+  </body>
+</html>

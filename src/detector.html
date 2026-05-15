@@ -17,7 +17,48 @@
         <li><a href="detector.html">Detector</a></li>
       </ul>
     </nav>
-    <div class="body"></div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+    <div class="detectorbod">
+      <div class="content">
+        <input type="text" id="userInput" />
+        <button id="submitBtn">search</button>
+        <div class="output"></div>
+      </div>
+    </div>
+    <script>
+      document
+        .getElementById("submitBtn")
+        .addEventListener("click", async function runAI() {
+          const outputDiv = document.getElementById("output");
+          const prompt = document.getElementById("userInput").value;
+
+          // 1. YOUR API KEY (Replace this!)
+          const API_KEY = "AIzaSyAlM038rt7vPGTFa9Vxgh6s09ByJ5dpKGE";
+          const URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${API_KEY}`;
+
+          // outputDiv.innerText = "Thinking...";
+
+          try {
+            // 2. The Fetch Call
+            const response = await fetch(URL, {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                contents: [{ parts: [{ text: prompt }] }],
+              }),
+            });
+
+            const data = await response.json();
+            consol.log(data.candidates[0].content.parts[0].text);
+
+            if (data.candidates && data.candidates[0].content) {
+              outputDiv.innerText = data.candidates[0].content.parts[0].text;
+            } else {
+              outputDiv.innerText = "Error: " + JSON.stringify(data);
+            }
+          } catch (error) {
+            outputDiv.innerText = "Connection Error: " + error.message;
+          }
+        });
+    </script>
   </body>
 </html>

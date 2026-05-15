@@ -1,9 +1,15 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
+import Groq from "groq-sdk";
 
 dotenv.config();
+
 const app = express();
+
+const groq = new Groq({
+  apiKey: process.env.GROQ_API_KEY,
+});
 
 app.use(
   cors({
@@ -17,47 +23,45 @@ app.post("/analyze", async (req, res) => {
   try {
     const userMessage = req.body.message;
 
-    const response = await fetch(
-      "https://api.groq.com/openai/v1/chat/completions",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${process.env.GROQ_API_KEY}`,
+    if (!userMessage) {
+      return res.status(400).json({
+        error: "No message provided",
+      });
+    }
+
+    const completion = await groq.chat.completions.create({
+      model: "llama-3.3-70b-versatile",
+
+      messages: [
+        {
+          role: "system",
+
+          content:
+            "You analyze unethical e-commerce practices and dark patterns clearly and professionally.",
         },
 
-        body: JSON.stringify({
-          model: "llama3-70b-8192",
-          messages: [
-            {
-              role: "system",
-              content:
-                "You are an expert in dark patterns and unethical e-commerce practices. Analyze user input and explain manipulative tactics clearly.",
-            },
-            {
-              role: "user",
-              content: userMessage,
-            },
-          ],
-          temperature: 0.7,
-        }),
-      },
-    );
+        {
+          role: "user",
 
-    const data = await response.json();
-    console.log(data);
+          content: userMessage,
+        },
+      ],
+    });
+
+    const reply = completion.choices[0]?.message?.content;
+
     res.json({
-      reply: data.choices[0].message.content,
+      reply,
     });
   } catch (error) {
     console.error(error);
 
     res.status(500).json({
-      error: "Something went wrong",
+      error: error.message || "Something went wrong",
     });
   }
 });
 
 app.listen(3000, () => {
-  console.log("Server running on http://localhost:3000");
+  console.log("Server running on port 3000");
 });

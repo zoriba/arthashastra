@@ -1,17 +1,17 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
 @import url("https://fonts.cdnfonts.com/css/lemonmilk");
 :root {
-  --jet-black: #30343fff;
-  --ghost-white: #fafaffff;
-  --periwinkle: #e4d9ffff;
-  --twilight-indigo: #273469ff;
-  --space-indigo: #1e2749ff;
+  --midnight-violet: #36151eff;
+  --vintage-grape: #593f62ff;
+  --dusty-lavender: #7b6d8dff;
+  --cool-steel: #8499b1ff;
+  --pale-sky: #a5c4d4ff;
 
-  --ash-grey: #cad2c5ff;
-  --muted-teal: #84a98cff;
-  --deep-teal: #52796fff;
-  --dark-slate-grey: #354f52ff;
-  --charcoal-blue: #2f3e46ff;
+  --ash-grey: #36151eff;
+  --muted-teal: #593f62ff;
+  --deep-teal: #7b6d8dff;
+  --dark-slate-grey: #8499b1ff;
+  --charcoal-blue: #a5c4d4ff;
 }
 
 html {
@@ -24,8 +24,8 @@ html {
 }
 body {
   background-image:
-    linear-gradient(rgb(47, 62, 70, 0.8), rgb(47, 62, 70, 0.8)),
-    url(../img/idkbru.png);
+    linear-gradient(rgb(165, 196, 212, 0.2), rgb(165, 196, 212, 0.2)),
+    url(../img/bg.jpg);
   font-family: "Poppins";
   margin: 0;
   padding: 10px;
@@ -33,10 +33,15 @@ body {
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
 }
 
 .logo {
-  width: 4em;
+  padding-top: 10px;
+  width: 13rem;
 }
 
 nav {
@@ -96,8 +101,8 @@ nav ul li a:hover {
 
 .homebody {
   background: rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
   flex: 1;
   width: 100%;
   margin-top: 15px;
@@ -129,7 +134,7 @@ nav ul li a:hover {
   font-family: "Lemon/Milk", sans-serif;
   font-weight: bolder;
   padding: 5px;
-  border: 1px solid #52796fff;
+  border: 1px solid var(--deep-teal);
   padding: 15px;
   border-radius: 10px;
   transition: 0.8s;
@@ -144,7 +149,6 @@ nav ul li a:hover {
   text-align: justify;
   color: var(--ash-grey);
   height: 100vh;
-
   max-height: 100%;
   font-size: large;
   padding: 20px;
@@ -213,6 +217,7 @@ nav ul li a:hover {
   border-radius: 20px;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
   color: var(--ash-grey);
+  overflow: scroll;
 }
 
 .quiz-progress {
@@ -312,6 +317,7 @@ nav ul li a:hover {
 }
 
 .search-box {
+  color: #404040;
   width: 100%;
   max-width: 1000px;
   display: flex;
@@ -341,7 +347,7 @@ nav ul li a:hover {
 }
 
 #userInput::placeholder {
-  color: rgba(202, 210, 197, 0.7);
+  color: var(--muted-teal);
 }
 
 #submitBtn {
@@ -378,4 +384,56 @@ nav ul li a:hover {
   line-height: 1.8;
   overflow-y: auto;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+}
+.docsBody {
+  display: grid;
+  grid-template-columns: 300px 1fr; /* Question takes 300px, Answer takes the rest */
+  gap: 40px; /* Controlled space between them */
+  max-width: 1100px; /* Prevents it from getting too wide on huge monitors */
+  margin: 0 auto; /* Centers the whole block */
+  padding: 30px 20px;
+  align-items: start; /* Keeps items aligned to the top */
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+.docsBody p {
+  font-size: 1.1rem;
+  color: var(--ash-grey);
+  line-height: 1.4;
+  margin: 0; /* Reset margins for grid alignment */
+}
+.docsBody h3 {
+  font-size: 1.1rem;
+  color: var(--muted-teal);
+  line-height: 1.4;
+  margin: 0;
+}
+.docs a {
+  color: var(--ash-grey);
+}
+
+.detectorbodtext {
+  width: 500px;
+  height: 100%;
+  padding: 40px;
+  text-align: center;
+  color: var(--muted-teal);
+}
+
+.option-btn.correct {
+  background: rgba(46, 204, 113, 0.25) !important;
+  border-color: #2ecc71 !important;
+  color: #1e7e34 !important;
+  font-weight: bold;
+}
+
+.option-btn.incorrect {
+  background: rgba(231, 76, 60, 0.25) !important;
+  border-color: #e74c3c !important;
+  color: #bd2130 !important;
+  font-weight: bold;
+}
+
+.option-btn.disabled {
+  pointer-events: none;
+  cursor: not-allowed;
 }

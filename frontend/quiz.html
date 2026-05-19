@@ -4,8 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="style.css" />
-    <link rel="shortcut icon" href="img/logo.png" type="image/x-icon" />
-    <title>MCS AN | Home</title>
+    <link rel="shortcut icon" href="img/favicon.png" type="image/x-icon" />
+    <title>StZori | Home</title>
   </head>
   <body>
     <nav>
@@ -14,7 +14,7 @@
         <li><a href="index.html">Home</a></li>
         <li><a href="docs.html">Docs</a></li>
         <li><a href="quiz.html">Quiz</a></li>
-        <li><a href="detector.html">Detector</a></li>
+        <li><a href="chatbot.html">Chatbot</a></li>
       </ul>
     </nav>
     <div class="body">
@@ -22,9 +22,12 @@
         <div class="quiz-progress" id="progress">Question 1 of 3</div>
         <h1 class="quiz-question" id="question">Question goes here</h1>
         <div class="quiz-options" id="options"></div>
-        <button class="next-btn" id="nextBtn">Next</button>
+        <button class="next-btn" id="nextBtn">Submit Answer</button>
         <a href="index.html" class="home-btn" id="homeBtn">
           Back to Homepage
+        </a>
+        <a href="chatbot.html" class="home-btn" id="chatBtn">
+          Talk to our chatbot
         </a>
       </div>
     </div>
@@ -32,134 +35,105 @@
       const questions = [
         {
           question: "What is a dark pattern in e-commerce?",
-
           options: [
             "A website bug",
             "A strategy that manipulates users into certain actions",
             "A cybersecurity tool",
             "A payment method",
           ],
-
           answer: 1,
         },
-
         {
           question: "Which of the following is an example of hidden costs?",
-
           options: [
             "Showing all charges clearly at the start",
             "Giving free delivery",
             "Revealing extra fees only at checkout",
             "Offering cashback rewards",
           ],
-
           answer: 2,
         },
-
         {
           question: "What is forced continuity?",
-
           options: [
             "A website crashing repeatedly",
             "A free trial automatically turning into a paid subscription",
             "A payment gateway error",
             "A product going out of stock",
           ],
-
           answer: 1,
         },
-
         {
           question: "Why do companies use dark patterns?",
-
           options: [
             "To make websites look colorful",
             "To improve profits and increase user actions",
             "To reduce sales",
             "To improve internet speed",
           ],
-
           answer: 1,
         },
-
         {
           question: "Which statement is an example of fake scarcity?",
-
           options: [
             "Free shipping available",
             "New collection launched",
             "Only 1 left in stock!",
             "Product available in different colors",
           ],
-
           answer: 2,
         },
-
         {
           question: "What is confirmshaming?",
-
           options: [
             "Protecting user privacy",
             "Using guilt-inducing language to influence choices",
             "Providing honest product reviews",
             "Encrypting user data",
           ],
-
           answer: 1,
         },
-
         {
           question:
             "Which psychological concept explains why people keep shopping after spending time filling their cart?",
-
           options: [
             "Social proof",
             "Endowment effect and sunk cost",
             "Default bias",
             "Scarcity effect",
           ],
-
           answer: 1,
         },
-
         {
           question: "What is one impact of dark patterns on consumers?",
-
           options: [
             "Increased trust in brands",
             "Faster internet access",
             "Financial loss and frustration",
             "Better shopping decisions",
           ],
-
           answer: 2,
         },
-
         {
           question:
             "According to the notes, what should users do before clicking Place Order?",
-
           options: [
             "Ignore the terms and conditions",
             "Quickly complete the purchase",
             "Pause and re-check pricing and checkboxes",
             "Refresh the website",
           ],
-
           answer: 2,
         },
-
         {
           question:
             "Which Indian law helps address unfair trade practices and dark patterns?",
-
           options: [
             "Right to Information Act",
             "Consumer Protection Act 2019",
             "Companies Act 2013",
             "Information Technology Act 2000",
           ],
-
           answer: 1,
         },
       ];
@@ -167,26 +141,32 @@
       let currentQuestion = 0;
       let selectedAnswer = null;
       let score = 0;
+      let isAnswered = false;
 
       const questionEl = document.getElementById("question");
       const optionsEl = document.getElementById("options");
       const progressEl = document.getElementById("progress");
       const nextBtn = document.getElementById("nextBtn");
+      const chatBtn = document.getElementById("chatBtn");
       const homeBtn = document.getElementById("homeBtn");
-
+      chatBtn.style.display = "none";
       function loadQuestion() {
         selectedAnswer = null;
+        isAnswered = false;
         const current = questions[currentQuestion];
 
         progressEl.textContent = `Question ${currentQuestion + 1} of ${questions.length}`;
         questionEl.textContent = current.question;
         optionsEl.innerHTML = "";
+        nextBtn.textContent = "Submit Answer";
 
         current.options.forEach((option, index) => {
           const button = document.createElement("button");
           button.classList.add("option-btn");
           button.textContent = option;
           button.addEventListener("click", () => {
+            if (isAnswered) return;
+
             document
               .querySelectorAll(".option-btn")
               .forEach((btn) => btn.classList.remove("selected"));
@@ -197,22 +177,60 @@
         });
       }
 
+      function showResults() {
+        progressEl.textContent = "Quiz Completed";
+        questionEl.innerHTML = `You scored ${score}/${questions.length}`;
+        optionsEl.innerHTML = "";
+        nextBtn.style.display = "none";
+
+        if (score === questions.length) {
+          optionsEl.innerHTML = `
+            <div class="result-card">
+                <h2>Perfect Score 🎉</h2>
+                <p>You answered every question correctly.</p>
+            </div>
+          `;
+        }
+        chatBtn.style.display = "inline";
+      }
+
       nextBtn.addEventListener("click", () => {
         if (selectedAnswer === null) return;
-        if (selectedAnswer === questions[currentQuestion].answer) {
-          score++;
-        }
 
-        currentQuestion++;
+        const current = questions[currentQuestion];
 
-        if (currentQuestion < questions.length) {
-          loadQuestion();
+        if (!isAnswered) {
+          isAnswered = true;
+          const buttons = optionsEl.querySelectorAll(".option-btn");
+
+          buttons.forEach((btn) => btn.classList.remove("selected"));
+
+          if (selectedAnswer === current.answer) {
+            score++;
+          }
+
+          buttons.forEach((button, index) => {
+            button.classList.add("disabled");
+            if (index === current.answer) {
+              button.classList.add("correct");
+            } else if (index === selectedAnswer) {
+              button.classList.add("incorrect");
+            }
+          });
+
+          if (currentQuestion === questions.length - 1) {
+            nextBtn.textContent = "Show Results";
+          } else {
+            nextBtn.textContent = "Next Question";
+          }
         } else {
-          questionEl.textContent = `Quiz Finished! You scored ${score}/${questions.length}`;
-          progressEl.textContent = "Completed";
-          optionsEl.innerHTML = "";
-          nextBtn.style.display = "none";
-          homeBtn.style.display = "inline-block";
+          currentQuestion++;
+
+          if (currentQuestion < questions.length) {
+            loadQuestion();
+          } else {
+            showResults();
+          }
         }
       });
 
